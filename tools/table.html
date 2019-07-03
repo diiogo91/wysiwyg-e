@@ -2,8 +2,7 @@
 <link rel="import" href="../../paper-button/paper-button.html">
 <link rel="import" href="../../iron-icon/iron-icon.html">
 <link rel="import" href="../../iron-iconset-svg/iron-iconset-svg.html">
-<link rel="import" href="../../paper-icon-butto
-n/paper-icon-button.html">
+<link rel="import" href="../../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../paper-input/paper-input.html">
 <link rel="import" href="../../paper-button/paper-button.html">
 <link rel="import" href="../../iron-a11y-keys/iron-a11y-keys.html">
@@ -16,7 +15,6 @@ n/paper-icon-button.html">
 <link rel="import" href="../../paper-toggle-button/paper-toggle-button.html">
 <link rel="import" href="../wysiwyg-tool.html">
 <link rel="import" href="../wysiwyg-localize.html">
-
 <iron-iconset-svg size="24" name="wysiwyg-tool-table">
 	<svg>
 		<defs>
@@ -29,12 +27,13 @@ n/paper-icon-button.html">
 <dom-module id="wysiwyg-tool-table">
 	<template>
 		<style include="iron-flex"></style>
+		<style include="wysiwyg-tool"></style>
 		<paper-tooltip id="tooltip" for="button" position="[[tooltipPosition]]" offset="5">
 			<wysiwyg-localize language="[[language]]" resources="[[resources]]" string-key="Table"></wysiwyg-localize>
 			<span> (Shift + Alt + T)</span>
 		</paper-tooltip>
 		<iron-a11y-keys id="a11y" target="[[target]]" keys="shift+alt+t" on-keys-pressed="open"></iron-a11y-keys>
-		<paper-menu-button on-opened-changed="_paperDropdownOpenedChanged" id="dropdown" disabled="[[disabled]]" dynamic-align>
+		<paper-menu-button on-opened-changed="_paperDropdownOpenedChanged" id="dropdown" disabled="[[disabled]]" dynamic-align >
 			<paper-button disabled="[[disabled]]" id="button" slot="dropdown-trigger">
 				<iron-icon icon="wysiwyg-tool-table:icon"></iron-icon>
 			</paper-button>
@@ -311,6 +310,7 @@ n/paper-icon-button.html">
 			}
 
 			updateInsert(event) {
+
 				if (this.disabled || !this.range0) return;
 				var rowCount = +this.rowCount, columnCount = +this.columnCount, showHeader  = this.showHeader, showFooter = this.showFooter;
 				this.close();
@@ -641,7 +641,6 @@ n/paper-icon-button.html">
 				event.stopPropagation();
 			}
 		}
-
-		customElements.define('wysiwyg-tool-table', WysiwygToolTable);
+		customElements.define(WysiwygToolTable.is, WysiwygToolTable);
 	</script>
 </dom-module>
