@@ -11,6 +11,7 @@
 * Underline
 * Strikethrough
 * Color
+* Table
 * Clear Formatting
 * Code
 * Link
@@ -35,6 +36,7 @@
 		<link rel="import" href="tools/underline.html">
 		<link rel="import" href="tools/strike.html">
 		<link rel="import" href="tools/color.html">
+		<link rel="import" href="tools/table.html">
 		<link rel="import" href="tools/clear.html">
 		<link rel="import" href="tools/code.html">
 		<link rel="import" href="tools/link.html">
@@ -54,6 +56,7 @@
 			<wysiwyg-tool-underline></wysiwyg-tool-underline>
 			<wysiwyg-tool-strike></wysiwyg-tool-strike>
 			<wysiwyg-tool-color></wysiwyg-tool-color>
+			<wysiwyg-tool-table></wysiwyg-tool-table>
 			<wysiwyg-tool-clear></wysiwyg-tool-clear>
 			<wysiwyg-tool-code></wysiwyg-tool-code>
 			<wysiwyg-tool-link></wysiwyg-tool-link>
@@ -79,6 +82,7 @@
   <wysiwyg-tool-underline></wysiwyg-tool-underline>
   <wysiwyg-tool-strike></wysiwyg-tool-strike>
   <wysiwyg-tool-color></wysiwyg-tool-color>
+  <wysiwyg-tool-table></wysiwyg-tool-table>
   <wysiwyg-tool-clear></wysiwyg-tool-clear>
   <wysiwyg-tool-code></wysiwyg-tool-code>
   <wysiwyg-tool-link></wysiwyg-tool-link>
