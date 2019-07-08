@@ -22,6 +22,7 @@
             :host {
                 display: block;
             }
+
             paper-button,
             #dropdown > paper-button[slot="dropdown-trigger"] {
                 padding: 0;
@@ -33,52 +34,64 @@
                 background: transparent;
                 text-transform: none;
             }
+
             #dropdown {
                 padding: 0;
             }
+
             paper-button,
             #dropdown,
             #dropdown > paper-button[slot="dropdown-trigger"] {
                 color: inherit;
                 background: transparent;
             }
+
             :host([active]) > paper-button,
             :host([active]) > #dropdown > paper-button[slot="dropdown-trigger"] {
                 color: var(--wysiwyg-tool-icon-active-color, rgba(0, 0, 0, 0.5));
                 background: transparent;
             }
+
             :host([disabled]) > paper-button,
             :host([disabled]) > #dropdown > paper-button[slot="dropdown-trigger"] {
                 color: var(--wysiwyg-tool-icon-disabled-color, rgba(255, 255, 255, 0.5));
                 background: transparent;
             }
+
             paper-icon-button#close {
                 color: var(--wysiwyg-tool-button-close, rgba(0, 0, 0, 0.5));
             }
+
             paper-icon-button#remove {
                 color: var(--wysiwyg-tool-button-remove, #d23f31);
             }
+
             paper-icon-button#updateInsert {
                 color: var(--wysiwyg-tool-button-updateinsert, #2A9AF2);
             }
+
             paper-input,
             paper-dropdown-menu {
                 --paper-input-container-focus-color: var(--wysiwyg-tool-focus-color, #2a9af2);
                 width: 400px;
                 max-width: 100%;
             }
+
             paper-item {
                 padding: 8px 16px;
             }
+
             paper-item:hover {
                 cursor: pointer;
             }
+
             paper-toggle-button {
                 --paper-toggle-button-checked-bar-color: #2A9AF2;
                 --paper-toggle-button-checked-button-color: #2A9AF2;
                 --paper-toggle-button-unchecked-ink-color: #2A9AF2;
                 --paper-toggle-button-checked-ink-color: #2A9AF2;
             }
+
             #dropdown > [slot="dropdown-content"] paper-menu-button {
                 padding: 0;
                 color: black;
@@ -87,7 +100,9 @@
     </template>
     <script>
         class WysiwygTool extends Polymer.Element {
-            static get is() { return 'wysiwyg-tool' }
+            static get is() {
+                return 'wysiwyg-tool'
+            }
 
             connectedCallback() {
                 super.connectedCallback();
@@ -418,15 +433,20 @@
                 return true;
             }
 
-            _activeChanged() {}
+            _activeChanged() {
+            }
 
-            _canRedoChanged() {}
+            _canRedoChanged() {
+            }
 
-            _canUndoChanged() {}
+            _canUndoChanged() {
+            }
 
-            _commandChanged() {}
+            _commandChanged() {
+            }
 
-            _commonAncestorPathChanged() {}
+            _commonAncestorPathChanged() {
+            }
 
             _computeActive(range0, selectionRoot, canRedo, canUndo, value, commonAncestorPath, command) {
                 if (!range0) return false;
@@ -443,29 +463,41 @@
                 return !document.queryCommandEnabled(command);
             }
 
-            _debugChanged() {}
+            _debugChanged() {
+            }
 
-            _disabledChanged() {}
+            _disabledChanged() {
+            }
 
-            _forceNarrowChanged() {}
+            _forceNarrowChanged() {
+            }
 
-            _languageChanged() {}
+            _languageChanged() {
+            }
 
-            _minWidth768pxChanged() {}
+            _minWidth768pxChanged() {
+            }
 
-            _modifierChanged() {}
+            _modifierChanged() {
+            }
 
-            _range0Changed() {}
+            _range0Changed() {
+            }
 
-            _selectionRootChanged() {}
+            _selectionRootChanged() {
+            }
 
-            _targetChanged() {}
+            _targetChanged() {
+            }
 
-            _tooltipPositionChanged() {}
+            _tooltipPositionChanged() {
+            }
 
-            _usesDialogChanged() {}
+            _usesDialogChanged() {
+            }
 
-            _valueChanged() {}
+            _valueChanged() {
+            }
         }
 
         customElements.define(WysiwygTool.is, WysiwygTool);

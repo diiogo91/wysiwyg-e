@@ -1165,7 +1165,7 @@ Command                                 | Mac Shortcut                          
                         //Remove the class attribute
                         if (node.hasAttribute && node.hasAttribute('class')) {
                             node.removeAttribute('class');
-                           console.log(node, 'class attribute');
+                            console.log(node, 'class attribute');
                             sanitized = false;
                         }
 
@@ -1175,7 +1175,7 @@ Command                                 | Mac Shortcut                          
                             p = document.createElement('p');
                             this.target.insertBefore(p, node.nextSibling);
                             p.appendChild(node);
-                             console.log(node, 'wrap top level text nodes inside P node');
+                            console.log(node, 'wrap top level text nodes inside P node');
                             sanitized = false;
                         }
 
@@ -1184,7 +1184,7 @@ Command                                 | Mac Shortcut                          
                             p = document.createElement('p');
                             this.target.insertBefore(p, node.nextSibling);
                             p.appendChild(node);
-                           console.log(node, 'wrap top level BR nodes inside P node');
+                            console.log(node, 'wrap top level BR nodes inside P node');
                             sanitized = false;
                         }
 
@@ -1204,7 +1204,7 @@ Command                                 | Mac Shortcut                          
 
                             if (node.tagName === oldTag) {
                                 node.outerHTML = '<' + newTag + '>' + node.innerHTML + '</' + newTag + '>';
-                               console.log(node, 'tag replacement', newTag);
+                                console.log(node, 'tag replacement', newTag);
                                 sanitized = false;
                             }
                         }
@@ -1213,7 +1213,7 @@ Command                                 | Mac Shortcut                          
                             if (tools[j].allowedTagNames) {
                                 for (k = 0; k < tools[j].allowedTagNames.length; k += 1) {
                                     if (node.tagName === tools[j].allowedTagNames[k] && !tools[j].sanitize(node)) {
-                                       console.log(node, 'tool sanitize');
+                                        console.log(node, 'tool sanitize');
                                         sanitized = false;
                                     }
                                 }
