@@ -8,7 +8,6 @@
 <link rel="import" href="../../iron-a11y-keys/iron-a11y-keys.html">
 <link rel="import" href="../../neon-animation/web-animations.html">
 <link rel="import" href="../../paper-tooltip/paper-tooltip.html">
-<link rel="import" href="../../paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../../paper-item/paper-item.html">
 <link rel="import" href="../../paper-menu-button/paper-menu-button.html">
 <link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
@@ -33,15 +32,15 @@
 			<span> (Shift + Alt + T)</span>
 		</paper-tooltip>
 		<iron-a11y-keys id="a11y" target="[[target]]" keys="shift+alt+t" on-keys-pressed="open"></iron-a11y-keys>
-		<paper-menu-button on-opened-changed="_paperDropdownOpenedChanged" id="dropdown" disabled="[[disabled]]" dynamic-align >
+		<paper-menu-button on-opened-changed="_paperDropdownOpenedChanged" id="dropdown" disabled="[[disabled]]" dynamic-align>
 			<paper-button disabled="[[disabled]]" id="button" slot="dropdown-trigger">
 				<iron-icon icon="wysiwyg-tool-table:icon"></iron-icon>
 			</paper-button>
 			<div style="padding: 8px 16px 18px 16px;" slot="dropdown-content">
 				<wysiwyg-localize language="[[language]]" resources="[[resources]]" string-key="Rows" localized="{{_localizedRows}}" hidden></wysiwyg-localize>
-				<paper-input label="[[_localizedRows]]" always-float-label value="{{rowCount}}" id="rowCount"></paper-input>
+				<paper-input label="[[_localizedRows]]" always-float-label value="{{rowCount}}" id="rowCount" on-iron-select="_stopPropagation" on-click="_stopPropagation"></paper-input>
 				<wysiwyg-localize language="[[language]]" resources="[[resources]]" string-key="Columns" localized="{{_localizedColumns}}" hidden></wysiwyg-localize>
-				<paper-input label="[[_localizedColumns]]" always-float-label value="{{columnCount}}" id="columnCount"></paper-input>
+				<paper-input label="[[_localizedColumns]]" always-float-label value="{{columnCount}}" id="columnCount" on-iron-select="_stopPropagation" on-click="_stopPropagation"></paper-input>
 				<div class="horizontal layout" style="padding: 10px 0;">
 					<paper-toggle-button checked="{{showHeader}}">
 						<wysiwyg-localize language="[[language]]" resources="[[resources]]" string-key="Show Header"></wysiwyg-localize>
@@ -61,7 +60,7 @@
 				<div hidden$="[[!selectedTable]]">
 					<div class="layout horizontal">
 						<paper-menu-button dynamic-align vertical-offset="42" horizontal-offset="5" id="insertDropdown">
-							<paper-button slot="dropdown-trigger">
+							<paper-button slot="dropdown-trigger" on-iron-select="_stopPropagation" on-click="_stopPropagation">
 								<wysiwyg-localize language="[[language]]" resources="[[resources]]" string-key="Insert"></wysiwyg-localize>
 								...
 							</paper-button>
@@ -88,14 +87,20 @@
 						</paper-menu-button>
 						<div class="flex"></div>
 						<paper-menu-button dynamic-align vertical-offset="42" horizontal-offset="5" id="deleteDropdown">
-							<paper-button slot="dropdown-trigger">
+							<paper-button slot="dropdown-trigger" on-iron-select="_stopPropagation" on-click="_stopPropagation">
 								<wysiwyg-localize language="[[language]]" resources="[[resources]]" string-key="Delete"></wysiwyg-localize>
 								...
 							</paper-button>
 							<div slot="dropdown-content">
-								<paper-item on-tap="deleteCell">Cell</paper-item>
-								<paper-item on-tap="deleteRow">Row</paper-item>
-								<paper-item on-tap="deleteColumn">Column</paper-item>
+								<paper-item on-tap="deleteCell">
+									<wysiwyg-localize language="[[language]]" resources="[[resources]]" string-key="Cell"></wysiwyg-localize>
+								</paper-item>
+								<paper-item on-tap="deleteRow">
+									<wysiwyg-localize language="[[language]]" resources="[[resources]]" string-key="Row"></wysiwyg-localize>
+								</paper-item>
+								<paper-item on-tap="deleteColumn">
+									<wysiwyg-localize language="[[language]]" resources="[[resources]]" string-key="Column"></wysiwyg-localize>
+								</paper-item>
 							</div>
 						</paper-menu-button>
 					</div>
@@ -106,6 +111,39 @@
 	<script>
 		class WysiwygToolTable extends WysiwygTool {
 			static get is() { return 'wysiwyg-tool-table' }
+
+			connectedCallback() {
+				super.connectedCallback();
+
+				if (!this._handler) {
+					this._handler = function (event) {
+						var target = event.composedPath()[0];
+						if (!this.target.contains(target)) return;
+
+						if (target.tagName === 'TABLE') {
+							this._setSelectedTable(target);
+							var selection = this.selectionRoot.getSelection();
+							selection.removeAllRanges();
+							var range = document.createRange();
+							range.selectNode(target);
+							selection.addRange(range);
+							this._setRange0(range);
+						} else {
+							this._setSelectedTable(null);
+						}
+					}.bind(this);
+				}
+
+				document.addEventListener('click', this._handler);
+				document.addEventListener('keydown', this._handler);
+			}
+
+			disconnectedCallback() {
+				super.disconnectedCallback();
+				document.removeEventListener('click', this._handler);
+				document.removeEventListener('keydown', this._handler);
+			}
+
 			static get properties() {
 				return {
 					columnCount: {
@@ -143,6 +181,7 @@
 					'br': {
 						'Cell After': 'Célula Após',
 						'Cell Before': 'Célula Antes',
+						'Cell':'Célula',
 						'Column': 'Coluna',
 						'Column After': 'Coluna Após',
 						'Column Before': 'Coluna Antes',
@@ -210,7 +249,7 @@
 					}
 				};
 
-				this.allowedTagNames = ['TABLE', 'THEAD', 'TBODY', 'TFOOT', 'CAPTION', 'COL', 'COLGROUP', 'TR', 'TH', 'TD'];
+				this.allowedTagNames = ['table', 'thead', 'tbody', 'tfoot', 'caption', 'col', 'colgroup', 'TR', 'TH', 'TD'];
 			}
 
 			close() {
@@ -298,6 +337,10 @@
 				);
 			}
 
+			_setSelectedTable(value){
+				this.selectedTable = value;
+			}
+
 			remove() {
 				if (this.disabled || !this.range0) return;
 
@@ -310,7 +353,6 @@
 			}
 
 			updateInsert(event) {
-
 				if (this.disabled || !this.range0) return;
 				var rowCount = +this.rowCount, columnCount = +this.columnCount, showHeader  = this.showHeader, showFooter = this.showFooter;
 				this.close();
@@ -593,11 +635,12 @@
 
 			_paperDropdownOpenedChanged(event) {
 				if (this.$.dropdown.opened) return;
-				this.columnCount = 1;
-				this.rowCount = 1;
-				this.showFooter = false;
-				this.showHeader = false;
-
+				if(this.selectedTable == null){
+					this.columnCount = 1;
+					this.rowCount = 1;
+					this.showFooter = false;
+					this.showHeader = false;
+				}
 				this.dispatchEvent(
 						new Event(
 								'restore-selection',
