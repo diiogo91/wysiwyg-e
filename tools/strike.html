@@ -8,13 +8,13 @@
 <link rel="import" href="../wysiwyg-tool.html">
 <link rel="import" href="../wysiwyg-localize.html">
 <iron-iconset-svg size="24" name="wysiwyg-tool-strike">
-  <svg>
-    <defs>
-      <g id="icon">
-        <path d="M10 19h4v-3h-4v3zM5 4v3h5v3h4V7h5V4H5zM3 14h18v-2H3v2z"></path>
-      </g>
-    </defs>
-  </svg>
+	<svg>
+		<defs>
+			<g id="icon">
+				<path d="M10 19h4v-3h-4v3zM5 4v3h5v3h4V7h5V4H5zM3 14h18v-2H3v2z"></path>
+			</g>
+		</defs>
+	</svg>
 </iron-iconset-svg>
 <dom-module id="wysiwyg-tool-strike">
 	<template>
@@ -31,11 +31,10 @@
 	<script>
 		class WysiwygToolStrike extends WysiwygTool {
 			static get is() { return 'wysiwyg-tool-strike' }
-
 			ready() {
 				super.ready();
 				this._setCommand('strikeThrough');
-		
+
 				this.resources = {
 					'br': {
 						'Strikethrough': 'Tachado'
@@ -47,11 +46,10 @@
 						'Strikethrough': 'Barrer'
 					}
 				};
-		
+
 				this.allowedTagNames = ['s'];
 			}
 		}
-
 		customElements.define(WysiwygToolStrike.is, WysiwygToolStrike);
 	</script>
 </dom-module>
